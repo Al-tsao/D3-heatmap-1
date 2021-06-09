@@ -1,7 +1,7 @@
 async function draw(el, scale) {
   // Data
   const dataset = await d3.json('data.json')
-  dataset.sort((a, b) => a - b)
+  dataset.sort((a, b) => a - b) /* 讓資料依照大小排序 */
 
   // Dimensions
   let dimensions = {
@@ -25,6 +25,11 @@ async function draw(el, scale) {
       .domain(d3.extent(dataset))
       .range(['white', 'red'])
   }
+  else if (scale === 'quantize') {
+    colorScale = d3.scaleQuantize()
+      .domain(d3.extent(dataset))
+      .range(['white', 'pink', 'red'])
+  }
 
   // Rectangles
   svg.append('g')
@@ -42,3 +47,4 @@ async function draw(el, scale) {
 }
 
 draw('#heatmap1', 'linear')
+draw('#heatmap2', 'quantize')
